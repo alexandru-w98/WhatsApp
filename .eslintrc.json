@@ -17,6 +17,7 @@
   },
   "plugins": ["react", "react-hooks"],
   "rules": {
-    "no-undef": "error"
+    "no-undef": "error",
+    "react/prop-types": 0
   }
 }
