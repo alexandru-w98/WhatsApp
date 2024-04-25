@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import * as styles from "./login-qr.module.css";
-import qrLoginImg from "../../assets/login-qr.png";
-import getStartedImg from "../../assets/get-started-img.png";
+import qrLoginImg from "../../assets/images/login-qr.png";
+import loginTutorial from "../../assets/images/login-tutorial.png";
+import loginTutorialVideo from "../../assets/media/login-qr.mp4";
 import {
   Settings,
   ArrowRight,
@@ -12,6 +13,14 @@ import {
 import { Link } from "react-router-dom";
 
 const LoginQR = () => {
+  const [isVideoActive, setIsVideoActive] = useState(false);
+  const videoRef = useRef(null);
+
+  const onVideoPlay = () => {
+    setIsVideoActive(true);
+    videoRef.current.play();
+  };
+
   return (
     <div className={styles["container"]}>
       <div className={styles["wrapper--before"]}></div>
@@ -48,7 +57,7 @@ const LoginQR = () => {
             </div>
             <div className={styles["qr"]}>
               <div className={styles["qr__img"]}>
-                <img src={qrLoginImg} />
+                <img src={qrLoginImg} draggable={false} />
               </div>
               <div className={styles["qr__logo"]}>
                 <LogoWithOutline />
@@ -56,7 +65,7 @@ const LoginQR = () => {
             </div>
           </div>
         </div>
-        <Link className={styles["link"]} to="login-phone-number">
+        <Link className={styles["link"]} to="#">
           Link with phone number
         </Link>
         <div className={styles["tutorial"]}>
@@ -65,11 +74,17 @@ const LoginQR = () => {
             Need help to get started?
           </Link>
           <div className={styles["tutorial__media"]}>
-            <button className={styles["media__button"]}>
-              <ArrowRight />
-            </button>
+            {!isVideoActive && (
+              <button className={styles["media__button"]} onClick={onVideoPlay}>
+                <ArrowRight />
+              </button>
+            )}
             <div className={styles["media__img"]}>
-              <img src={getStartedImg} />
+              <video controls ref={videoRef}>
+                <source src={loginTutorialVideo} type="video/mp4" />
+                Your browser does not support the video tag.
+              </video>
+              {!isVideoActive && <img src={loginTutorial} draggable={false} />}
             </div>
           </div>
         </div>
