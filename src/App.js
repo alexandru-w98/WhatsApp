@@ -10,7 +10,7 @@ const router = createBrowserRouter([
     element: <LoginQR />,
   },
   {
-    path: "login",
+    path: "login-phone-number",
     element: <LoginPhoneNumber />,
   },
 ]);

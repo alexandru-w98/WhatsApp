@@ -382,3 +382,11 @@ template {
 [hidden] {
   display: none;
 }
+
+button {
+  outline: inherit;
+  font: inherit;
+  border: 1px solid black;
+  color: inherit;
+  cursor: pointer;
+}
