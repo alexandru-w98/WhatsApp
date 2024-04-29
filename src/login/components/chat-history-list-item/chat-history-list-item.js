@@ -3,11 +3,11 @@ import { DefaultProfile } from "../icons";
 import * as styles from "./chat-history-list-item.css";
 import classNames from "classnames";
 
-const ChatHistoryListItem = ({ className }) => {
+const ChatHistoryListItem = ({ className, onClick }) => {
   const containerClasses = classNames(styles["item"], className);
 
   return (
-    <div className={containerClasses}>
+    <div className={containerClasses} onClick={onClick}>
       <div className={styles["item__avatar"]}>
         <DefaultProfile />
       </div>

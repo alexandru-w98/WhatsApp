@@ -1,10 +1,11 @@
 .item {
   display: flex;
-  margin: 4px 12px;
+  padding: 0px 12px 4px 12px;
   align-items: center;
   color: rgb(134, 150, 160);
   gap: 15px;
   height: 72px;
+  cursor: pointer;
 
   .item__avatar {
     width: 50px;
@@ -41,4 +42,8 @@
   .item__message {
     font-size: 14px;
   }
+}
+
+.item:hover {
+  background-color: #202c33;
 }

@@ -3,9 +3,16 @@ import { repeat } from "ramda";
 import ChatHistoryListItem from "../chat-history-list-item";
 import * as styles from "./chat-history-list.css";
 
-const ChatHistoryList = () => {
+const ChatHistoryList = ({ setSelectedItem }) => {
+  const onItemSelected = () => {
+    setSelectedItem(true);
+  };
+
   const mockContent = repeat(
-    <ChatHistoryListItem className={styles["list__delimiter"]} />,
+    <ChatHistoryListItem
+      className={styles["list__delimiter"]}
+      onClick={onItemSelected}
+    />,
     20
   );
 
