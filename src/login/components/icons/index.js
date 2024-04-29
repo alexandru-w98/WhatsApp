@@ -7,3 +7,5 @@ export { default as Status } from "./status";
 export { default as Channel } from "./channel";
 export { default as NewChat } from "./new-chat";
 export { default as BurgerMenu } from "./burger-menu";
+export { default as Search } from "./search";
+export { default as Filter } from "./filter";
