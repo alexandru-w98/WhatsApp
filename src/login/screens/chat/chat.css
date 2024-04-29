@@ -1,5 +1,5 @@
 .chat {
-  background-color: rgb(16, 26, 32);
+  background-color: #0c1317;
   box-sizing: border-box;
   width: 100%;
   padding: 20px 20px 20px 20px;
@@ -19,9 +19,11 @@
 
   .chat__history {
     background-color: rgb(17, 27, 33);
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid rgba(249, 249, 249, 0.15);
   }
 
   .chat__messages {
-    background-color: green;
   }
 }

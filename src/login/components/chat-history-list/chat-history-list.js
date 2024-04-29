@@ -6,7 +6,7 @@ import * as styles from "./chat-history-list.css";
 const ChatHistoryList = () => {
   const mockContent = repeat(
     <ChatHistoryListItem className={styles["list__delimiter"]} />,
-    10
+    20
   );
 
   return <div className={styles["list"]}>{mockContent}</div>;

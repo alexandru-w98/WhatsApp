@@ -3,6 +3,7 @@ import * as styles from "./chat.css";
 import ChatMenuSettings from "../../components/chat-menu-settings";
 import ChatHistorySearch from "../../components/chat-history-search";
 import ChatHistoryList from "../../components/chat-history-list";
+import NoChatSelectedPlaceholder from "../../components/no-chat-selected-placeholder";
 
 const Chat = () => {
   return (
@@ -13,7 +14,9 @@ const Chat = () => {
           <ChatHistorySearch />
           <ChatHistoryList />
         </div>
-        <div className={styles["chat__messages"]}>messages</div>
+        <div className={styles["chat__messages"]}>
+          <NoChatSelectedPlaceholder />
+        </div>
       </div>
     </div>
   );

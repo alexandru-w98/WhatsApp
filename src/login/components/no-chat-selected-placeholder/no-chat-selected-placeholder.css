@@ -1,0 +1,30 @@
+.no-chat {
+  background-color: rgb(34, 46, 53);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: rgba(233, 237, 239, 0.88);
+  padding: 28px 0;
+  position: relative;
+
+  .no-chat__title {
+    font-size: 32px;
+    margin-top: 40px;
+  }
+
+  .no-chat__description {
+    text-align: center;
+    font-size: 14px;
+    margin-top: 16px;
+    color: rgb(134, 150, 160);
+  }
+
+  .no-chat__footer {
+    position: absolute;
+    bottom: 28px;
+    color: rgb(102, 119, 129);
+    font-size: 14px;
+  }
+}
