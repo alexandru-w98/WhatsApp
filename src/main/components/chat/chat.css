@@ -1,0 +1,10 @@
+.chat {
+  background-color: rgb(17, 27, 33);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+
+  .chat__content {
+    flex-grow: 1;
+  }
+}

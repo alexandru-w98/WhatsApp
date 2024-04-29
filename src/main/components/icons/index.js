@@ -12,3 +12,6 @@ export { default as Filter } from "./filter";
 export { default as DefaultProfile } from "./default-profile";
 export { default as NoChatSelected } from "./no-chat-selected";
 export { default as Lock } from "./lock";
+export { default as Plus } from "./plus";
+export { default as Microphone } from "./microphone";
+export { default as SmileyFace } from "./smiley-face";

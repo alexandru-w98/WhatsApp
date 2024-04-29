@@ -1,7 +1,7 @@
 import React from "react";
 import ChatOptionsMenu from "../chat-options-menu/chat-options-menu";
 import avatarImg from "../../assets/images/avatar.jpg";
-import * as styles from "./chat-menu-settings.css";
+import * as styles from "./chat-history-navbar.css";
 import { BurgerMenu, Channel, Community, NewChat, Status } from "../icons";
 
 const ChatMenuSettings = () => {

@@ -1,8 +1,8 @@
 import React from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
-import LoginQR from "./login/screens/login-qr";
+import LoginQR from "./main/screens/login-qr";
 import "./App.css";
-import Chat from "./login/screens/chat-main-page";
+import Chat from "./main/screens/chat-main-page";
 
 const router = createBrowserRouter([
   {
