@@ -9,3 +9,4 @@ export { default as NewChat } from "./new-chat";
 export { default as BurgerMenu } from "./burger-menu";
 export { default as Search } from "./search";
 export { default as Filter } from "./filter";
+export { default as DefaultProfile } from "./default-profile";
