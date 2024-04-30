@@ -1,6 +1,6 @@
 import React from "react";
 
-const BurgerMenu = ({ width = 24, height = 24 }) => {
+const BurgerMenuWithOutline = ({ width = 24, height = 24 }) => {
   return (
     <svg height={height} viewBox="0 0 24 24" width={width}>
       <rect fill="#f2f2f2" height="24" rx="3" width="24"></rect>
@@ -12,4 +12,4 @@ const BurgerMenu = ({ width = 24, height = 24 }) => {
   );
 };
 
-export default BurgerMenu;
+export default BurgerMenuWithOutline;

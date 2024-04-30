@@ -1,0 +1,24 @@
+.list {
+  flex-grow: 1;
+  height: 300px;
+  overflow-y: scroll;
+
+  .list__delimiter > div:nth-child(2) {
+    border-top: 1px solid #202c33;
+  }
+
+  .list__delimiter:first-of-type > div:nth-child(2) {
+    border-top: none;
+  }
+}
+
+.list::-webkit-scrollbar {
+  width: 10px;
+}
+
+.list::-webkit-scrollbar-thumb {
+  background-color: rgb(17, 27, 33);
+  border-radius: 20px;
+  box-shadow: inset 0 0 10px 10px rgb(44, 51, 55);
+  border: solid 2px transparent;
+}

@@ -1,0 +1,7 @@
+.menu {
+  background-color: rgb(32, 44, 51);
+  padding: 10px 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}

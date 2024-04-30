@@ -6,7 +6,7 @@ import loginTutorialVideo from "../../assets/media/login-qr.mp4";
 import {
   Settings,
   ArrowRight,
-  BurgerMenu,
+  BurgerMenuWithOutline,
   Logo,
   LogoWithOutline,
 } from "../../components/icons";
@@ -40,7 +40,7 @@ const LoginQR = () => {
                 <li>
                   Tap <strong>Menu</strong>{" "}
                   <div className={styles["list__item-icon"]}>
-                    <BurgerMenu />
+                    <BurgerMenuWithOutline />
                   </div>{" "}
                   on Android, or <strong>Settings</strong>{" "}
                   <div className={styles["list__item-icon"]}>

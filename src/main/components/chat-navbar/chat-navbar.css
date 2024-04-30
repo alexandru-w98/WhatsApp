@@ -1,0 +1,29 @@
+.avatar {
+  width: 40px;
+  height: 40px;
+
+  svg {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+.left-items {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  color: rgb(233, 237, 239);
+  cursor: pointer;
+}
+
+.right-items {
+  display: flex;
+  gap: 16px;
+  margin-right: 8px;
+  color: rgb(174, 186, 193);
+  align-items: center;
+
+  svg {
+    cursor: pointer;
+  }
+}

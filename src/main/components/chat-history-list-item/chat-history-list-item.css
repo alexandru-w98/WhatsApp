@@ -1,0 +1,49 @@
+.item {
+  display: flex;
+  padding: 0px 12px 4px 12px;
+  align-items: center;
+  color: rgb(134, 150, 160);
+  gap: 15px;
+  height: 72px;
+  cursor: pointer;
+
+  .item__avatar {
+    width: 50px;
+    height: 50px;
+
+    svg {
+      width: 50px;
+      height: 50px;
+    }
+  }
+
+  .item__content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .item__header {
+    display: flex;
+    justify-content: space-between;
+
+    .item__title {
+      color: rgb(233, 237, 239);
+      font-size: 16px;
+    }
+
+    .item__time {
+      font-size: 12px;
+    }
+  }
+
+  .item__message {
+    font-size: 14px;
+  }
+}
+
+.item:hover {
+  background-color: #202c33;
+}
