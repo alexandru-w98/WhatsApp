@@ -91,10 +91,6 @@
           .qr__img {
             width: 264px;
             height: 264px;
-
-            img {
-              width: 100%;
-            }
           }
 
           .qr__logo {

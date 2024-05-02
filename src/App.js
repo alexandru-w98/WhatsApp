@@ -5,6 +5,7 @@ import "./App.css";
 import Chat from "./main/screens/chat-main-page";
 import socketIO from "socket.io-client";
 import { SocketContext } from "./context/socketContext";
+import VerifyNumber from "./main/screens/verify-number";
 
 const socket = socketIO.connect("http://localhost:4000");
 const router = createBrowserRouter([
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "chat",
     element: <Chat />,
+  },
+  {
+    path: "verify-number/:socketId",
+    element: <VerifyNumber />,
   },
 ]);
 

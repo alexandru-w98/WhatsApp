@@ -1,3 +1,6 @@
 node_modules
 .vscode
 jsconfig.json
+
+src/main/sensitive-constants/*
+!src/main/sensitive-constants/template.js
