@@ -5,6 +5,7 @@ import ChatHistorySearch from "../../components/chat-history-search";
 import ChatHistoryList from "../../components/chat-history-list";
 import NoChatSelectedPlaceholder from "../../components/no-chat-selected-placeholder";
 import Chat from "../../components/chat";
+import withProtectedRoute from "../../hocs/withProtectedRoute";
 
 const ChatMainPage = () => {
   const [selectedItem, setSelectedItem] = useState();
@@ -23,4 +24,4 @@ const ChatMainPage = () => {
   );
 };
 
-export default ChatMainPage;
+export default withProtectedRoute(ChatMainPage);
