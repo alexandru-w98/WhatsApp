@@ -1,10 +1,7 @@
 import React, { useEffect, useRef, useState } from "react";
 import * as styles from "./login-qr.module.css";
-import loginTutorial from "../../assets/images/login-tutorial.png";
-import loginTutorialVideo from "../../assets/media/login-qr.mp4";
 import {
   Settings,
-  ArrowRight,
   BurgerMenuWithOutline,
   LogoWithOutline,
 } from "../../components/icons";
@@ -13,17 +10,11 @@ import withSocket from "../../hocs/withSocket";
 import qrcode from "qrcode";
 import { pipe } from "ramda";
 import withScreenCard from "../../hocs/withScreenCard";
+import TutorialVideo from "../../components/tutorial-video";
 
 const LoginQR = ({ socket }) => {
-  const [isVideoActive, setIsVideoActive] = useState(false);
-  const videoRef = useRef(null);
   const canvasRef = useRef(null);
   const [qrToken, setQrToken] = useState("");
-
-  const onVideoPlay = () => {
-    setIsVideoActive(true);
-    videoRef.current.play();
-  };
 
   useEffect(() => {
     socket.on("qr-update", (data) => setQrToken(data.qrToken));
@@ -91,26 +82,7 @@ const LoginQR = ({ socket }) => {
       <Link className={styles["link"]} to="#">
         Link with phone number
       </Link>
-      <div className={styles["tutorial"]}>
-        <div className={styles["tutorial__title"]}>Tutorial</div>
-        <Link className={styles["tutorial__link"]} to="#">
-          Need help to get started?
-        </Link>
-        <div className={styles["tutorial__media"]}>
-          {!isVideoActive && (
-            <button className={styles["media__button"]} onClick={onVideoPlay}>
-              <ArrowRight />
-            </button>
-          )}
-          <div className={styles["media__img"]}>
-            <video controls ref={videoRef}>
-              <source src={loginTutorialVideo} type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
-            {!isVideoActive && <img src={loginTutorial} draggable={false} />}
-          </div>
-        </div>
-      </div>
+      <TutorialVideo />
     </>
   );
 };
