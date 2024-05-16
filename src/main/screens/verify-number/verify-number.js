@@ -19,16 +19,17 @@ const VerifyNumber = () => {
   const [queryParams] = useSearchParams();
 
   const onSendOTP = () => {
-    const payload = JSON.stringify({
-      socketId: queryParams.get("socketId"),
-      phone: "",
-    });
+    console.log("test", inputRef.current.value);
+    // const payload = JSON.stringify({
+    //   socketId: queryParams.get("socketId"),
+    //   phone: "",
+    // });
 
-    sendOTP({
-      reqOptions: {
-        body: payload,
-      },
-    });
+    // sendOTP({
+    //   reqOptions: {
+    //     body: payload,
+    //   },
+    // });
   };
 
   const onVerifyOTP = () => {
@@ -51,8 +52,15 @@ const VerifyNumber = () => {
       <div className={styles["subtitle"]}>
         Select a country and enter your WhatsApp phone number.
       </div>
-      <RoundedInput className={styles["input"]} />
-      <button className={styles["btn"]}>Next</button>
+      <RoundedInput
+        ref={inputRef}
+        className={styles["input"]}
+        prefix="+40"
+        isNumeric
+      />
+      <button className={styles["btn"]} onClick={onSendOTP}>
+        Next
+      </button>
       <Link className={styles["link"]} to="#">
         Link with QR code
       </Link>

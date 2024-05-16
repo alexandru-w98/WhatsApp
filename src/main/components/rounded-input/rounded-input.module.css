@@ -1,0 +1,26 @@
+.container {
+  display: flex;
+  align-items: center;
+  border: 1px solid rgb(233, 237, 239);
+  border-radius: 24px;
+  padding: 14px 10px 15px 24px;
+  font-weight: 400;
+  color: rgb(11, 20, 26);
+
+  .input {
+    border: none;
+  }
+
+  .input:focus {
+    outline: none;
+  }
+}
+
+.container:focus {
+  outline: none;
+  border-color: #008069;
+}
+
+.container--focused {
+  border-color: #008069;
+}
