@@ -10,8 +10,6 @@ const useLazyFetch = ({ url, options = {}, onSuccess = T, onError = T }) => {
   const lazyFetch = async (props = {}) => {
     const { urlParams = {}, reqOptions = {} } = props;
     const normalizedUrl = isFunction(url) ? url(urlParams) : url;
-
-    console.log("test", normalizedUrl);
     const normalizedOptions = { ...options, ...reqOptions };
 
     setLoading(true);

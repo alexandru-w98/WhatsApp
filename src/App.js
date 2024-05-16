@@ -18,7 +18,7 @@ const router = createBrowserRouter([
     element: <Chat />,
   },
   {
-    path: "verify-number/:socketId",
+    path: "verify-number",
     element: <VerifyNumber />,
   },
 ]);

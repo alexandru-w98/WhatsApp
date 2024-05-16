@@ -25,12 +25,17 @@ const LoginQR = ({ socket }) => {
   };
 
   useEffect(() => {
-    socket.on("qr-update", (data) => setQrToken(data.socketId));
+    socket.on("qr-update", (data) => setQrToken(data.qrToken));
+    socket.on("enable-login", (data) => console.log("test", data));
   }, [socket]);
 
   useEffect(() => {
     if (canvasRef && qrToken) {
-      const qrPhrase = `http://localhost:4002/verify-number/${qrToken}`;
+      const qrPhrase = `http://localhost:4002/verify-number?socketId=${qrToken}`;
+
+      // TODO: remove this when the app is deployed
+      // currently used to open the qr in the browser
+      console.log("test", qrPhrase);
 
       qrcode.toCanvas(
         canvasRef.current,
