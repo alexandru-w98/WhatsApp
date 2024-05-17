@@ -20,11 +20,15 @@ const CountriesDropdownSearch = ({
 
   const containerClasses = classNames(className, styles["dropdown"]);
 
+  useEffect(() => {
+    setFilteredOptions(options);
+  }, [options]);
+
   const onItemSelected = (item) => () => {
     setSelectedItem(item);
     setIsPopoverActive(false);
 
-    onChanged();
+    onChanged(item);
   };
 
   useEffect(() => {

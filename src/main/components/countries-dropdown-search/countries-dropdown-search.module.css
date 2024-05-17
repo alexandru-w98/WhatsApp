@@ -20,11 +20,14 @@
       gap: 8px;
       font-size: 14px;
       font-weight: 400;
+      align-items: center;
     }
   }
 
   .selected__country__img {
     width: 20px;
+    display: flex;
+    align-items: center;
 
     img {
       width: 100%;
@@ -69,7 +72,9 @@
     }
 
     .dropdown__list {
-      padding: 8px;
+      max-height: 250px;
+      overflow-y: scroll;
+      margin: 8px;
 
       .list__item {
         display: flex;
@@ -82,6 +87,7 @@
           gap: 8px;
           font-weight: 400;
           color: rgb(17, 27, 33);
+          align-items: center;
         }
 
         .list__phone_code {
@@ -93,6 +99,16 @@
       .list__item:hover {
         background-color: #f5f6f6;
       }
+    }
+
+    .dropdown__list::-webkit-scrollbar {
+      width: 6px;
+      border-radius: 20px;
+    }
+
+    .dropdown__list::-webkit-scrollbar-thumb {
+      background: rgba(11, 20, 26, 0.2);
+      border-radius: 20px;
     }
   }
 

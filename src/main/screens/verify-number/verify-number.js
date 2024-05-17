@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import * as styles from "./verify-number.module.css";
 import useSendOTP from "../../hooks/useSendOTP";
 import useVerifyOTP from "../../hooks/useVerifyOTP";
@@ -8,6 +8,8 @@ import { Link } from "react-router-dom";
 import TutorialVideo from "../../components/tutorial-video";
 import RoundedInput from "../../components/rounded-input";
 import CountriesDropdownSearch from "../../components/countries-dropdown-search";
+import { prop, concat, pipe, slice } from "ramda";
+import useCountries from "../../hooks/useCountries";
 
 const options = [
   {
@@ -30,6 +32,8 @@ const options = [
   },
 ];
 
+const defaultSelected = options[0];
+
 const onSuccess = (data) => {
   localStorage.setItem("otpID", data.pinId);
 };
@@ -37,15 +41,19 @@ const onSuccess = (data) => {
 const VerifyNumber = () => {
   const [sendOTP] = useSendOTP({ onSuccess });
   const [verifyOTP] = useVerifyOTP();
+  const { data: options } = useCountries();
   const inputRef = useRef();
   const [queryParams] = useSearchParams();
+  const [selectedCountry, setSelectedCountry] = useState(defaultSelected);
 
   const onSendOTP = () => {
-    console.log("test", inputRef.current.value);
-    // const payload = JSON.stringify({
-    //   socketId: queryParams.get("socketId"),
-    //   phone: "",
-    // });
+    const payload = JSON.stringify({
+      socketId: queryParams.get("socketId"),
+      phone: concat(
+        pipe(prop("phoneCode"), slice(1, Infinity))(selectedCountry),
+        inputRef.current.value
+      ),
+    });
 
     // sendOTP({
     //   reqOptions: {
@@ -55,17 +63,24 @@ const VerifyNumber = () => {
   };
 
   const onVerifyOTP = () => {
-    const raw = JSON.stringify({
+    const payload = JSON.stringify({
       pin: inputRef.current.value,
       socketId: queryParams.get("socketId"),
-      phone: "",
+      phone: concat(
+        pipe(prop("phoneCode"), slice(1, Infinity))(selectedCountry),
+        inputRef.current.value
+      ),
     });
 
-    verifyOTP({
-      reqOptions: {
-        body: raw,
-      },
-    });
+    // verifyOTP({
+    //   reqOptions: {
+    //     body: payload,
+    //   },
+    // });
+  };
+
+  const onCountryChanged = (item) => {
+    setSelectedCountry(item);
   };
 
   return (
@@ -77,12 +92,13 @@ const VerifyNumber = () => {
       <CountriesDropdownSearch
         className={styles["dropdown"]}
         options={options}
-        selected={options[0]}
+        selected={defaultSelected}
+        onChanged={onCountryChanged}
       />
       <RoundedInput
         ref={inputRef}
         className={styles["input"]}
-        prefix="+40"
+        prefix={prop("phoneCode")(selectedCountry)}
         isNumeric
       />
       <button className={styles["btn"]} onClick={onSendOTP}>
