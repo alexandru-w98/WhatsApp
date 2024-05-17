@@ -38,5 +38,13 @@
 
   .input {
     margin-bottom: 32px;
+    width: 266px;
+    min-height: 52px;
+  }
+
+  .dropdown {
+    margin-bottom: 12px;
+    width: 266px;
+    min-height: 52px;
   }
 }

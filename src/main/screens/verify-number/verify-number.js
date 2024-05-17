@@ -7,6 +7,28 @@ import withScreenCard from "../../hocs/withScreenCard";
 import { Link } from "react-router-dom";
 import TutorialVideo from "../../components/tutorial-video";
 import RoundedInput from "../../components/rounded-input";
+import CountriesDropdownSearch from "../../components/countries-dropdown-search";
+
+const options = [
+  {
+    name: "Romania",
+    countryCode: "ro",
+    phoneCode: "+40",
+    id: 1,
+  },
+  {
+    name: "United Arab Emirates",
+    countryCode: "ae",
+    phoneCode: "+402",
+    id: 2,
+  },
+  {
+    name: "Anguilla",
+    countryCode: "ai",
+    phoneCode: "+43",
+    id: 3,
+  },
+];
 
 const onSuccess = (data) => {
   localStorage.setItem("otpID", data.pinId);
@@ -52,6 +74,11 @@ const VerifyNumber = () => {
       <div className={styles["subtitle"]}>
         Select a country and enter your WhatsApp phone number.
       </div>
+      <CountriesDropdownSearch
+        className={styles["dropdown"]}
+        options={options}
+        selected={options[0]}
+      />
       <RoundedInput
         ref={inputRef}
         className={styles["input"]}
