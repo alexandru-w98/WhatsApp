@@ -2,7 +2,7 @@ import * as styles from "./countries-dropdown-search.module.css";
 import classNames from "classnames";
 import React, { useEffect, useState, useRef } from "react";
 import { CaretDown, Search, X } from "../icons";
-import { map, prop, pipe, startsWith, filter, toLower } from "ramda";
+import { map, prop, pipe, startsWith, filter, toLower, equals } from "ramda";
 import noop from "../noop";
 
 const CountriesDropdownSearch = ({
@@ -17,19 +17,13 @@ const CountriesDropdownSearch = ({
   const [filteredOptions, setFilteredOptions] = useState(options);
   const searchInputRef = useRef(null);
   const containerRef = useRef(null);
+  const selectedItemRef = useRef(null);
 
   const containerClasses = classNames(className, styles["dropdown"]);
 
   useEffect(() => {
     setFilteredOptions(options);
   }, [options]);
-
-  const onItemSelected = (item) => () => {
-    setSelectedItem(item);
-    setIsPopoverActive(false);
-
-    onChanged(item);
-  };
 
   useEffect(() => {
     const onClickOutside = (event) => {
@@ -46,13 +40,43 @@ const CountriesDropdownSearch = ({
     };
   }, [containerRef]);
 
+  useEffect(() => {
+    if (!isPopoverActive) {
+      setFilteredOptions(options);
+    } else {
+      selectedItemRef.current.scrollIntoView();
+    }
+  }, [isPopoverActive]);
+
+  useEffect(() => {
+    if (isPopoverActive) {
+      searchInputRef.current.focus();
+    }
+  }, [isPopoverActive]);
+
+  const onItemSelected = (item) => () => {
+    setSelectedItem(item);
+    setIsPopoverActive(false);
+
+    onChanged(item);
+  };
+
   const DropdownItem = (countryObj) => {
     const { name, countryCode, phoneCode, id } = countryObj;
+    const containerClasses = classNames(styles["list__item"], {
+      [styles["list__item__selected"]]: equals(countryObj, selectedItem),
+    });
+
+    const divProps = equals(countryObj, selectedItem)
+      ? { ref: selectedItemRef }
+      : {};
+
     return (
       <div
-        className={styles["list__item"]}
+        className={containerClasses}
         onClick={onItemSelected(countryObj)}
         key={id}
+        {...divProps}
       >
         <div className={styles["list__name_container"]}>
           <div className={styles["selected__country__img"]}>
@@ -71,12 +95,6 @@ const CountriesDropdownSearch = ({
     setIsPopoverActive((prev) => !prev);
   };
 
-  useEffect(() => {
-    if (isPopoverActive) {
-      searchInputRef.current.focus();
-    }
-  }, [isPopoverActive]);
-
   const onSearchInputChanged = (e) => {
     const val = e.target.value;
 
@@ -85,6 +103,10 @@ const CountriesDropdownSearch = ({
     );
 
     setFilteredOptions(updatedOptions);
+  };
+
+  const onTest = () => {
+    selectedItemRef.current.scrollIntoView();
   };
 
   return (
@@ -112,7 +134,9 @@ const CountriesDropdownSearch = ({
               <Search />
             </div>
             <input ref={searchInputRef} onChange={onSearchInputChanged} />
-            <X />
+            <div onClick={onTest}>
+              <X />
+            </div>
           </div>
           <div className={styles["dropdown__list"]}>{dropdownList}</div>
         </div>

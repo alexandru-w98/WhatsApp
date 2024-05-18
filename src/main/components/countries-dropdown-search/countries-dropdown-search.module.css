@@ -99,16 +99,23 @@
       .list__item:hover {
         background-color: #f5f6f6;
       }
+
+      .list__item__selected {
+        background-color: rgb(240, 242, 245);
+      }
     }
 
     .dropdown__list::-webkit-scrollbar {
-      width: 6px;
+      width: 12px;
       border-radius: 20px;
     }
 
     .dropdown__list::-webkit-scrollbar-thumb {
-      background: rgba(11, 20, 26, 0.2);
+      background: #fff;
       border-radius: 20px;
+
+      box-shadow: inset 0 0 10px 10px rgba(11, 20, 26, 0.2);
+      border: solid 3px transparent;
     }
   }
 

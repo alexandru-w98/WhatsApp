@@ -11,28 +11,12 @@ import CountriesDropdownSearch from "../../components/countries-dropdown-search"
 import { prop, concat, pipe, slice } from "ramda";
 import useCountries from "../../hooks/useCountries";
 
-const options = [
-  {
-    name: "Romania",
-    countryCode: "ro",
-    phoneCode: "+40",
-    id: 1,
-  },
-  {
-    name: "United Arab Emirates",
-    countryCode: "ae",
-    phoneCode: "+402",
-    id: 2,
-  },
-  {
-    name: "Anguilla",
-    countryCode: "ai",
-    phoneCode: "+43",
-    id: 3,
-  },
-];
-
-const defaultSelected = options[0];
+const defaultSelected = {
+  id: 171,
+  name: "Romania",
+  countryCode: "ro",
+  phoneCode: "+40",
+};
 
 const onSuccess = (data) => {
   localStorage.setItem("otpID", data.pinId);
