@@ -38,6 +38,8 @@ const LoginQR = ({ socket }) => {
         { width: 264 }
         // TODO: add placeholder in case of failure
       );
+    } else {
+      socket.emit("request-qr", "");
     }
   }, [canvasRef, qrToken]);
 
