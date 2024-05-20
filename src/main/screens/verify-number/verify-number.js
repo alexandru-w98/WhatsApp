@@ -25,13 +25,14 @@ const onSuccess = (data) => {
 
 const VerifyNumber = () => {
   const [sendOTP] = useSendOTP({ onSuccess });
-  const [verifyOTP] = useVerifyOTP();
   const { data: options } = useCountries();
   const inputRef = useRef();
   const [queryParams] = useSearchParams();
   const [selectedCountry, setSelectedCountry] = useState(defaultSelected);
-  const [isOtpSent, setIsOtpSent] = useState(true);
+  const [isOtpSent, setIsOtpSent] = useState(false);
   const [verifyInputValue, setVerifyInputValue] = useState("");
+
+  const [verifyOTP] = useVerifyOTP();
 
   const onSendOTP = () => {
     const payload = JSON.stringify({
