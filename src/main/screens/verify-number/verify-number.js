@@ -11,6 +11,7 @@ import CountriesDropdownSearch from "../../components/countries-dropdown-search"
 import { prop, concat, pipe, slice } from "ramda";
 import useCountries from "../../hooks/useCountries";
 import PincodeInput from "../../components/pincode-input";
+import successGif from "../../assets/media/success.gif";
 
 const defaultSelected = {
   id: 171,
@@ -19,20 +20,19 @@ const defaultSelected = {
   phoneCode: "+40",
 };
 
-const onSuccess = (data) => {
-  localStorage.setItem("otpID", data.pinId);
-};
-
 const VerifyNumber = () => {
-  const [sendOTP] = useSendOTP({ onSuccess });
+  const [sendOTP] = useSendOTP();
   const { data: options } = useCountries();
   const inputRef = useRef();
   const [queryParams] = useSearchParams();
   const [selectedCountry, setSelectedCountry] = useState(defaultSelected);
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [verifyInputValue, setVerifyInputValue] = useState("");
+  const [isVerified, setIsVerified] = useState(false);
 
-  const [verifyOTP] = useVerifyOTP();
+  const onVerifySuccess = () => setIsVerified(true);
+
+  const [verifyOTP] = useVerifyOTP({ onSuccess: onVerifySuccess });
 
   const onSendOTP = () => {
     const payload = JSON.stringify({
@@ -61,7 +61,6 @@ const VerifyNumber = () => {
       pin: verifyInputValue,
       socketId: queryParams.get("socketId"),
     });
-
     verifyOTP({
       reqOptions: {
         body: payload,
@@ -92,7 +91,7 @@ const VerifyNumber = () => {
 
   const onSubmitClicked = isOtpSent ? onVerifyOTP : onSendOTP;
 
-  return (
+  const mainForm = (
     <div className={styles["container"]}>
       <div className={styles["title"]}>Enter phone number</div>
       <div className={styles["subtitle"]}>
@@ -112,6 +111,14 @@ const VerifyNumber = () => {
       <TutorialVideo />
     </div>
   );
+
+  const verifiedJSX = (
+    <div className={styles["success"]}>
+      <img src={successGif} />
+    </div>
+  );
+
+  return isVerified ? verifiedJSX : mainForm;
 };
 
 export default withScreenCard(VerifyNumber);
