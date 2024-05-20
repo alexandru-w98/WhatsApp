@@ -12,6 +12,7 @@ import { pipe } from "ramda";
 import withScreenCard from "../../hocs/withScreenCard";
 import TutorialVideo from "../../components/tutorial-video";
 import { prop } from "ramda";
+import withRedirectIfLogged from "../../hocs/withRedirectIfLogged";
 
 const LoginQR = ({ socket }) => {
   const canvasRef = useRef(null);
@@ -92,4 +93,4 @@ const LoginQR = ({ socket }) => {
   );
 };
 
-export default pipe(withScreenCard, withSocket)(LoginQR);
+export default pipe(withScreenCard, withSocket, withRedirectIfLogged)(LoginQR);

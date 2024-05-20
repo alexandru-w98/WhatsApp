@@ -1,12 +1,12 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
 import useVerifyJWT from "../hooks/useVerifyJWT";
-import { isNil, prop, pipe } from "ramda";
+import { isNil, prop, pipe, not } from "ramda";
 import Loading from "../components/loading";
 
 const isNilOrFalse = (val) => isNil(val) || val === false;
 
-const withProtectedRoute = (Component) => {
+const withRedirectIfLogged = (Component) => {
   const WrappedComponent = (props) => {
     const location = useLocation().pathname;
     const token = localStorage.getItem("authToken");
@@ -17,8 +17,8 @@ const withProtectedRoute = (Component) => {
       return <Loading />;
     }
 
-    if (pipe(prop("valid"), isNilOrFalse)(data)) {
-      return <Navigate to="/" replace state={{ from: location }} />;
+    if (pipe(prop("valid"), isNilOrFalse, not)(data)) {
+      return <Navigate to="/chat" replace state={{ from: location }} />;
     }
 
     return <Component {...props} />;
@@ -27,4 +27,4 @@ const withProtectedRoute = (Component) => {
   return WrappedComponent;
 };
 
-export default withProtectedRoute;
+export default withRedirectIfLogged;

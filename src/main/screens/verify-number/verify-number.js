@@ -12,6 +12,7 @@ import { prop, concat, pipe, slice } from "ramda";
 import useCountries from "../../hooks/useCountries";
 import PincodeInput from "../../components/pincode-input";
 import successGif from "../../assets/media/success.gif";
+import withRedirectIfLogged from "../../hocs/withRedirectIfLogged";
 
 const defaultSelected = {
   id: 171,
@@ -121,4 +122,4 @@ const VerifyNumber = () => {
   return isVerified ? verifiedJSX : mainForm;
 };
 
-export default withScreenCard(VerifyNumber);
+export default pipe(withScreenCard, withRedirectIfLogged)(VerifyNumber);
