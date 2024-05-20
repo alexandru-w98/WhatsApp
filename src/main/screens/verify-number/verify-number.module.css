@@ -21,6 +21,7 @@
     border: none;
     margin-bottom: 24px;
     transition: background-color 0.3s;
+    margin-top: 32px;
   }
 
   .btn:hover {
@@ -37,7 +38,6 @@
   }
 
   .input {
-    margin-bottom: 32px;
     width: 266px;
     min-height: 52px;
   }
