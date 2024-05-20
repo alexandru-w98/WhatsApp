@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { RouterProvider, createBrowserRouter } from "react-router-dom";
 import LoginQR from "./main/screens/login-qr";
 import "./App.css";
@@ -27,6 +27,12 @@ const App = () => {
   const context = {
     socket,
   };
+
+  useEffect(() => {
+    socket.emit("update-socketId", {
+      token: localStorage.getItem("authToken"),
+    });
+  }, []);
 
   return (
     <SocketContext.Provider value={context}>
