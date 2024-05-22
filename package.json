@@ -9,7 +9,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "echo \"precommit\""
+      "pre-commit": "echo \"precommitceva\""
     }
   },
   "keywords": [],
