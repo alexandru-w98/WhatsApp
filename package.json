@@ -8,11 +8,6 @@
     "lint": "npx eslint src",
     "prepare": "husky"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "echo \"precommitceva\""
-    }
-  },
   "keywords": [],
   "author": "",
   "license": "ISC",
