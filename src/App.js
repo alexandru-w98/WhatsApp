@@ -30,6 +30,7 @@ const App = () => {
   };
 
   useEffect(() => {
+    //
     socket.emit("update-socketId", {
       token: getCookieValue("authToken"),
     });
