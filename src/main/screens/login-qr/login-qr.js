@@ -8,11 +8,12 @@ import {
 import { Link, useNavigate } from "react-router-dom";
 import withSocket from "../../hocs/withSocket";
 import qrcode from "qrcode";
-import { pipe } from "ramda";
+import { isNil, pipe } from "ramda";
 import withScreenCard from "../../hocs/withScreenCard";
 import TutorialVideo from "../../components/tutorial-video";
 import { prop } from "ramda";
 import withRedirectIfLogged from "../../hocs/withRedirectIfLogged";
+import { getCookieValue, setCookie } from "../../utils/cookie";
 
 const LoginQR = ({ socket }) => {
   const canvasRef = useRef(null);
@@ -20,7 +21,10 @@ const LoginQR = ({ socket }) => {
   const navigate = useNavigate();
 
   const onEnableLogin = (token) => {
-    localStorage.setItem("authToken", token);
+    if (isNil(getCookieValue("authToken"))) {
+      setCookie("authToken", token);
+    }
+
     navigate("/chat");
   };
 
@@ -31,7 +35,7 @@ const LoginQR = ({ socket }) => {
 
   useEffect(() => {
     if (canvasRef && qrToken) {
-      const qrPhrase = `http://localhost:4002/verify-number?socketId=${qrToken}`;
+      const qrPhrase = `http://localhost:4002/verify-number?socketId=${qrToken}&mobile=true`;
 
       qrcode.toCanvas(
         canvasRef.current,

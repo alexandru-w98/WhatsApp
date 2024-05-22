@@ -9,9 +9,8 @@ const isNilOrFalse = (val) => isNil(val) || val === false;
 const withRedirectIfLogged = (Component) => {
   const WrappedComponent = (props) => {
     const location = useLocation().pathname;
-    const token = localStorage.getItem("authToken");
 
-    const { data, loading } = useVerifyJWT({ token });
+    const { data, loading } = useVerifyJWT();
 
     if (loading) {
       return <Loading />;

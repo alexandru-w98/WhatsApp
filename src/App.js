@@ -6,6 +6,7 @@ import Chat from "./main/screens/chat-main-page";
 import socketIO from "socket.io-client";
 import { SocketContext } from "./context/socketContext";
 import VerifyNumber from "./main/screens/verify-number";
+import { getCookieValue } from "./main/utils/cookie";
 
 const socket = socketIO.connect("http://localhost:4000");
 const router = createBrowserRouter([
@@ -30,7 +31,7 @@ const App = () => {
 
   useEffect(() => {
     socket.emit("update-socketId", {
-      token: localStorage.getItem("authToken"),
+      token: getCookieValue("authToken"),
     });
   }, []);
 

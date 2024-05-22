@@ -1,6 +1,6 @@
 import { useFetch } from "./use-fetch";
 
-const useVerifyJWT = ({ token }) => {
+const useVerifyJWT = () => {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
@@ -8,9 +8,7 @@ const useVerifyJWT = ({ token }) => {
   const options = {
     method: "POST",
     headers: myHeaders,
-    body: JSON.stringify({
-      token,
-    }),
+    credentials: "include",
   };
 
   const { data, loading, error } = useFetch({

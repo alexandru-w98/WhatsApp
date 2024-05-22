@@ -1,10 +1,10 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import * as styles from "./verify-number.module.css";
 import useSendOTP from "../../hooks/useSendOTP";
 import useVerifyOTP from "../../hooks/useVerifyOTP";
 import { useSearchParams } from "react-router-dom";
 import withScreenCard from "../../hocs/withScreenCard";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import TutorialVideo from "../../components/tutorial-video";
 import RoundedInput from "../../components/rounded-input";
 import CountriesDropdownSearch from "../../components/countries-dropdown-search";
@@ -13,6 +13,8 @@ import useCountries from "../../hooks/useCountries";
 import PincodeInput from "../../components/pincode-input";
 import successGif from "../../assets/media/success.gif";
 import withRedirectIfLogged from "../../hocs/withRedirectIfLogged";
+import withSocket from "../../hocs/withSocket";
+import { setCookie } from "../../utils/cookie";
 
 const defaultSelected = {
   id: 171,
@@ -21,7 +23,7 @@ const defaultSelected = {
   phoneCode: "+40",
 };
 
-const VerifyNumber = () => {
+const VerifyNumber = ({ socket }) => {
   const [sendOTP] = useSendOTP();
   const { data: options } = useCountries();
   const inputRef = useRef();
@@ -31,10 +33,23 @@ const VerifyNumber = () => {
   const [verifyInputValue, setVerifyInputValue] = useState("");
   const [isVerified, setIsVerified] = useState(false);
   const [phoneNumber, setPhoneNumber] = useState();
+  const navigate = useNavigate();
 
   const onVerifySuccess = () => setIsVerified(true);
 
   const [verifyOTP] = useVerifyOTP({ onSuccess: onVerifySuccess });
+
+  const onEnableLogin = (token) => {
+    setCookie("authToken", token);
+
+    if (queryParams.get("mobile") !== true) {
+      navigate("/chat");
+    }
+  };
+
+  useEffect(() => {
+    socket.on("enable-login", (data) => onEnableLogin(prop("token")(data)));
+  }, [socket]);
 
   const onSendOTP = () => {
     const payload = JSON.stringify({
@@ -114,7 +129,7 @@ const VerifyNumber = () => {
       <button className={styles["btn"]} onClick={onSubmitClicked}>
         {isOtpSent ? "Verify Code" : "Next"}
       </button>
-      <Link className={styles["link"]} to="#">
+      <Link className={styles["link"]} to="/">
         Link with QR code
       </Link>
       <TutorialVideo />
@@ -130,4 +145,8 @@ const VerifyNumber = () => {
   return isVerified ? verifiedJSX : mainForm;
 };
 
-export default pipe(withScreenCard, withRedirectIfLogged)(VerifyNumber);
+export default pipe(
+  withScreenCard,
+  withSocket,
+  withRedirectIfLogged
+)(VerifyNumber);
