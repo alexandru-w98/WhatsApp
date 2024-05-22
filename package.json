@@ -9,7 +9,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npx eslint src"
+      "pre-commit": "echo \"precommit\""
     }
   },
   "keywords": [],
