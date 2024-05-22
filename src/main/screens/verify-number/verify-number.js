@@ -30,6 +30,7 @@ const VerifyNumber = () => {
   const [isOtpSent, setIsOtpSent] = useState(false);
   const [verifyInputValue, setVerifyInputValue] = useState("");
   const [isVerified, setIsVerified] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState();
 
   const onVerifySuccess = () => setIsVerified(true);
 
@@ -50,6 +51,12 @@ const VerifyNumber = () => {
       },
     });
 
+    setPhoneNumber(
+      concat(
+        pipe(prop("phoneCode"), slice(1, Infinity))(selectedCountry),
+        inputRef.current.value
+      )
+    );
     setIsOtpSent(true);
   };
 
@@ -61,6 +68,7 @@ const VerifyNumber = () => {
     const payload = JSON.stringify({
       pin: verifyInputValue,
       socketId: queryParams.get("socketId"),
+      phone: phoneNumber,
     });
     verifyOTP({
       reqOptions: {
