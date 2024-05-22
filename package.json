@@ -9,7 +9,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run lint && echo \"ceva\""
+      "pre-commit": "npx eslint src"
     }
   },
   "keywords": [],
