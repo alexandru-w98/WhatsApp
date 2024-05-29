@@ -1,96 +1,100 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as styles from "./login-qr.module.css";
-import qrLoginImg from "../../assets/images/login-qr.png";
-import loginTutorial from "../../assets/images/login-tutorial.png";
-import loginTutorialVideo from "../../assets/media/login-qr.mp4";
 import {
   Settings,
-  ArrowRight,
   BurgerMenuWithOutline,
-  Logo,
   LogoWithOutline,
 } from "../../components/icons";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import withSocket from "../../hocs/withSocket";
+import qrcode from "qrcode";
+import { isNil, pipe } from "ramda";
+import withScreenCard from "../../hocs/withScreenCard";
+import TutorialVideo from "../../components/tutorial-video";
+import { prop } from "ramda";
+import withRedirectIfLogged from "../../hocs/withRedirectIfLogged";
+import { getCookieValue, setCookie } from "../../utils/cookie";
 
-const LoginQR = () => {
-  const [isVideoActive, setIsVideoActive] = useState(false);
-  const videoRef = useRef(null);
+const LoginQR = ({ socket }) => {
+  const canvasRef = useRef(null);
+  const [qrToken, setQrToken] = useState("");
+  const navigate = useNavigate();
 
-  const onVideoPlay = () => {
-    setIsVideoActive(true);
-    videoRef.current.play();
+  const onEnableLogin = (token) => {
+    if (isNil(getCookieValue("authToken"))) {
+      setCookie("authToken", token);
+    }
+
+    navigate("/chat");
   };
 
+  useEffect(() => {
+    socket.on("qr-update", (data) => setQrToken(data.qrToken));
+    socket.on("enable-login", (data) => onEnableLogin(prop("token")(data)));
+  }, [socket]);
+
+  useEffect(() => {
+    if (canvasRef && qrToken) {
+      const qrPhrase = `http://localhost:4002/verify-number?socketId=${qrToken}&mobile=true`;
+
+      qrcode.toCanvas(
+        canvasRef.current,
+        qrPhrase,
+        { width: 264 }
+        // TODO: add placeholder in case of failure
+      );
+    } else {
+      socket.emit("request-qr", "");
+    }
+  }, [canvasRef, qrToken]);
+
   return (
-    <div className={styles["container"]}>
-      <div className={styles["wrapper--before"]}></div>
-      <div className={styles["logo"]}>
-        <Logo />
-        <div>WHATASPP WEB</div>
-      </div>
-      <div className={styles["container__content"]}>
-        <div className={styles["login-steps-container"]}>
-          <div className={styles["login-steps"]}>
-            <div className={styles["steps__list"]}>
-              <div className={styles["list__title"]}>
-                Use WhatsApp on your computer
-              </div>
-              <ol className={styles["list__content"]}>
-                <li>Open WhatsApp on your phone</li>
-                <li>
-                  Tap <strong>Menu</strong>{" "}
-                  <div className={styles["list__item-icon"]}>
-                    <BurgerMenuWithOutline />
-                  </div>{" "}
-                  on Android, or <strong>Settings</strong>{" "}
-                  <div className={styles["list__item-icon"]}>
-                    <Settings />
-                  </div>{" "}
-                  on iPhone
-                </li>
-                <li>
-                  Tap <strong>Linked devices</strong> and then{" "}
-                  <strong>Link a device</strong>
-                </li>
-                <li>Point your phone at this screen to capture the QR code</li>
-              </ol>
+    <>
+      <div className={styles["login-steps-container"]}>
+        <div className={styles["login-steps"]}>
+          <div className={styles["steps__list"]}>
+            <div className={styles["list__title"]}>
+              Use WhatsApp on your computer
             </div>
-            <div className={styles["qr"]}>
-              <div className={styles["qr__img"]}>
-                <img src={qrLoginImg} draggable={false} />
-              </div>
-              <div className={styles["qr__logo"]}>
-                <LogoWithOutline />
-              </div>
-            </div>
+            <ol className={styles["list__content"]}>
+              <li>Open WhatsApp on your phone</li>
+              <li>
+                Tap <strong>Menu</strong>{" "}
+                <div className={styles["list__item-icon"]}>
+                  <BurgerMenuWithOutline />
+                </div>{" "}
+                on Android, or <strong>Settings</strong>{" "}
+                <div className={styles["list__item-icon"]}>
+                  <Settings />
+                </div>{" "}
+                on iPhone
+              </li>
+              <li>
+                Tap <strong>Linked devices</strong> and then{" "}
+                <strong>Link a device</strong>
+              </li>
+              <li>Point your phone at this screen to capture the QR code</li>
+            </ol>
           </div>
-        </div>
-        <Link className={styles["link"]} to="#">
-          Link with phone number
-        </Link>
-        <div className={styles["tutorial"]}>
-          <div className={styles["tutorial__title"]}>Tutorial</div>
-          <Link className={styles["tutorial__link"]} to="#">
-            Need help to get started?
-          </Link>
-          <div className={styles["tutorial__media"]}>
-            {!isVideoActive && (
-              <button className={styles["media__button"]} onClick={onVideoPlay}>
-                <ArrowRight />
-              </button>
-            )}
-            <div className={styles["media__img"]}>
-              <video controls ref={videoRef}>
-                <source src={loginTutorialVideo} type="video/mp4" />
-                Your browser does not support the video tag.
-              </video>
-              {!isVideoActive && <img src={loginTutorial} draggable={false} />}
+          <div className={styles["qr"]}>
+            <div className={styles["qr__img"]}>
+              <canvas id="qr-canvas" ref={canvasRef} />
+            </div>
+            <div className={styles["qr__logo"]}>
+              <LogoWithOutline />
             </div>
           </div>
         </div>
       </div>
-    </div>
+      <Link
+        className={styles["link"]}
+        to={`/verify-number?socketId=${qrToken}`}
+      >
+        Link with phone number
+      </Link>
+      <TutorialVideo />
+    </>
   );
 };
 
-export default LoginQR;
+export default pipe(withScreenCard, withSocket, withRedirectIfLogged)(LoginQR);
