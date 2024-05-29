@@ -11,7 +11,7 @@ const useSendOTP = (props = {}) => {
   };
 
   const [useLazySendOtp, { data, loading, error }] = useLazyFetch({
-    url: "http://localhost:4000/send-otp",
+    url: "http://localhost:4000/otps/send",
     options,
     ...props,
   });

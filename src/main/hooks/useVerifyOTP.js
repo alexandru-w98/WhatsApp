@@ -11,7 +11,7 @@ const useVerifyOTP = (props = {}) => {
   };
 
   const [useLazySendOtp, { data, loading, error }] = useLazyFetch({
-    url: "http://localhost:4000/verify-otp",
+    url: "http://localhost:4000/otps/verify",
     options,
     ...props,
   });

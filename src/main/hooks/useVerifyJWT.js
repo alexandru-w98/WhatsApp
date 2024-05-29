@@ -12,7 +12,7 @@ const useVerifyJWT = () => {
   };
 
   const { data, loading, error } = useFetch({
-    url: "http://localhost:4000/verify-token",
+    url: "http://localhost:4000/auth/verify",
     options,
   });
 
