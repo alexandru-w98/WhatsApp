@@ -7,7 +7,7 @@ const ChatNavbar = () => {
   const leftItems = (
     <div className={styles["left-items"]}>
       <div className={styles["avatar"]}>
-        <DefaultProfile />
+        <DefaultProfile width={40} height={40} />
       </div>
       <div>Test User</div>
     </div>

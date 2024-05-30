@@ -7,7 +7,7 @@ const ChatHistorySearch = (props, ref) => {
     <div className={styles["search"]}>
       <div className={styles["search__input"]}>
         <Search />
-        <input placeholder="Search" ref={ref} />
+        <input className={styles["input"]} placeholder="Search" ref={ref} />
       </div>
       <div className={styles["search__filters"]}>
         <Filter />
