@@ -1,20 +1,21 @@
 import React from "react";
-import { repeat } from "ramda";
-import ChatHistoryListItem from "../chat-history-list-item";
+import { map } from "ramda";
+import ChatListItem from "../chat-list-item";
 import * as styles from "./chat-history-list.css";
 
-const ChatHistoryList = ({ setSelectedItem }) => {
+const ChatHistoryList = ({ setSelectedItem, data, searchCriteria }) => {
   const onItemSelected = () => {
     setSelectedItem(true);
   };
 
-  const mockContent = repeat(
-    <ChatHistoryListItem
+  const mockContent = map((item) => (
+    <ChatListItem
       className={styles["list__delimiter"]}
       onClick={onItemSelected}
-    />,
-    20
-  );
+      searchCriteria={searchCriteria}
+      {...item}
+    />
+  ))(data);
 
   return <div className={styles["list"]}>{mockContent}</div>;
 };

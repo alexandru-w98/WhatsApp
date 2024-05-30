@@ -47,3 +47,7 @@
 .item:hover {
   background-color: #202c33;
 }
+
+.text-highlight {
+  color: rgb(0, 168, 132);
+}
