@@ -1,4 +1,4 @@
-import { useFetch } from "./use-fetch";
+import { useFetch } from "../use-fetch";
 
 const useVerifyJWT = () => {
   const myHeaders = new Headers();

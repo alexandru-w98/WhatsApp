@@ -1,6 +1,6 @@
 import React from "react";
 import { Navigate, useLocation } from "react-router-dom";
-import useVerifyJWT from "../hooks/useVerifyJWT";
+import useVerifyJWT from "../hooks/requests/useVerifyJWT";
 import { isNil, prop, pipe, not } from "ramda";
 import Loading from "../components/loading";
 
