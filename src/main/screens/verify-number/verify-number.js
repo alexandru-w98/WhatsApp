@@ -1,7 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import * as styles from "./verify-number.module.css";
-import useSendOTP from "../../hooks/useSendOTP";
-import useVerifyOTP from "../../hooks/useVerifyOTP";
+import useSendOTP from "../../hooks/requests/useSendOTP";
+import useVerifyOTP from "../../hooks/requests/useVerifyOTP";
 import { useSearchParams } from "react-router-dom";
 import withScreenCard from "../../hocs/withScreenCard";
 import { Link, useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import TutorialVideo from "../../components/tutorial-video";
 import RoundedInput from "../../components/rounded-input";
 import CountriesDropdownSearch from "../../components/countries-dropdown-search";
 import { prop, concat, pipe, slice } from "ramda";
-import useCountries from "../../hooks/useCountries";
+import useCountries from "../../hooks/requests/useCountries";
 import PincodeInput from "../../components/pincode-input";
 import successGif from "../../assets/media/success.gif";
 import withRedirectIfLogged from "../../hocs/withRedirectIfLogged";

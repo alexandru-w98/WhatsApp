@@ -1,11 +1,11 @@
 import React from "react";
 
-const DefaultProfile = () => {
+const DefaultProfile = ({ width = "212", height = "212" }) => {
   return (
     <svg
       viewBox="0 0 212 212"
-      height="212"
-      width="212"
+      height={width}
+      width={height}
       version="1.1"
       x="0px"
       y="0px"

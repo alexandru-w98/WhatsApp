@@ -1,6 +1,6 @@
-import { useLazyFetch } from "./use-fetch";
+import { useLazyFetch } from "../use-fetch";
 
-const useVerifyOTP = (props = {}) => {
+const useSendOTP = (props = {}) => {
   const myHeaders = new Headers();
   myHeaders.append("Content-Type", "application/json");
   myHeaders.append("Accept", "application/json");
@@ -11,7 +11,7 @@ const useVerifyOTP = (props = {}) => {
   };
 
   const [useLazySendOtp, { data, loading, error }] = useLazyFetch({
-    url: "http://localhost:4000/otps/verify",
+    url: "http://localhost:4000/otps/send",
     options,
     ...props,
   });
@@ -19,4 +19,4 @@ const useVerifyOTP = (props = {}) => {
   return [useLazySendOtp, { data, loading, error }];
 };
 
-export default useVerifyOTP;
+export default useSendOTP;

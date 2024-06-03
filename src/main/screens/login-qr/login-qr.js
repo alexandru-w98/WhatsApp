@@ -60,13 +60,13 @@ const LoginQR = ({ socket }) => {
               <li>Open WhatsApp on your phone</li>
               <li>
                 Tap <strong>Menu</strong>{" "}
-                <div className={styles["list__item-icon"]}>
+                <span className={styles["list__item-icon"]}>
                   <BurgerMenuWithOutline />
-                </div>{" "}
+                </span>{" "}
                 on Android, or <strong>Settings</strong>{" "}
-                <div className={styles["list__item-icon"]}>
+                <span className={styles["list__item-icon"]}>
                   <Settings />
-                </div>{" "}
+                </span>{" "}
                 on iPhone
               </li>
               <li>

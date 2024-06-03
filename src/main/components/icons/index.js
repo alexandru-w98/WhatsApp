@@ -17,3 +17,4 @@ export { default as Microphone } from "./microphone";
 export { default as SmileyFace } from "./smiley-face";
 export { default as CaretDown } from "./caret-down";
 export { default as X } from "./x";
+export { default as ContainerCorner } from "./container-corner";

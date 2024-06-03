@@ -1,4 +1,4 @@
-import { useFetch } from "./use-fetch";
+import { useFetch } from "../use-fetch";
 
 const useCountries = () => {
   const myHeaders = new Headers();

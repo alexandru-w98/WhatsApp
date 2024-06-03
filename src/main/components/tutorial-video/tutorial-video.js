@@ -26,12 +26,18 @@ const TutorialVideo = () => {
             <ArrowRight />
           </button>
         )}
-        <div className={styles["media__img"]}>
-          <video controls ref={videoRef}>
+        <div className={styles["media-container"]}>
+          <video controls ref={videoRef} className={styles["media"]}>
             <source src={loginTutorialVideo} type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          {!isVideoActive && <img src={loginTutorial} draggable={false} />}
+          {!isVideoActive && (
+            <img
+              src={loginTutorial}
+              draggable={false}
+              className={styles["media"]}
+            />
+          )}
         </div>
       </div>
     </div>
