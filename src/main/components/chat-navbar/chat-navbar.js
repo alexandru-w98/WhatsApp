@@ -3,13 +3,13 @@ import ChatOptionsMenu from "../chat-options-menu/chat-options-menu";
 import * as styles from "./chat-navbar.css";
 import { BurgerMenu, Search, DefaultProfile } from "../icons";
 
-const ChatNavbar = () => {
+const ChatNavbar = ({ name }) => {
   const leftItems = (
     <div className={styles["left-items"]}>
       <div className={styles["avatar"]}>
         <DefaultProfile width={40} height={40} />
       </div>
-      <div>Test User</div>
+      <div>{name}</div>
     </div>
   );
   const rightItems = (

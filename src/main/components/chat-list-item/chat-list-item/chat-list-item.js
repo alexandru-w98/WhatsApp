@@ -4,7 +4,7 @@ import * as styles from "./chat-list-item.css";
 import classNames from "classnames";
 import getHighlightedText from "../../../utils/get-highlighted-text";
 
-const ChatListItem = ({ className, onClick, searchCriteria, title, id }) => {
+const ChatListItem = ({ className, onClick, searchCriteria, name, id }) => {
   const containerClasses = classNames(styles["item"], className);
 
   return (
@@ -15,11 +15,7 @@ const ChatListItem = ({ className, onClick, searchCriteria, title, id }) => {
       <div className={styles["item__content"]}>
         <div className={styles["item__header"]}>
           <div className={styles["item__title"]}>
-            {getHighlightedText(
-              title,
-              searchCriteria,
-              styles["text-highlight"]
-            )}
+            {getHighlightedText(name, searchCriteria, styles["text-highlight"])}
           </div>
           <div className={styles["item__time"]}>12:00</div>
         </div>

@@ -6,38 +6,47 @@ import ChatHistoryList from "../../components/chat-history-list";
 import NoChatSelectedPlaceholder from "../../components/no-chat-selected-placeholder";
 import Chat from "../../components/chat";
 import withProtectedRoute from "../../hocs/withProtectedRoute";
-import { repeat, map, pipe, addIndex } from "ramda";
-import CHAT_TYPES from "../../constants/chat";
-
-const mapIndexed = addIndex(map);
-const mockHistoryConversations = pipe(
-  repeat({}),
-  mapIndexed((item, index) => ({
-    title: `Test ${index}`,
-    id: index,
-    type: CHAT_TYPES.CHAT,
-  }))
-)(20);
-
-const mockSearch = "es";
+import { pipe, isEmpty, not, prop } from "ramda";
+import useUserProfile from "../../hooks/requests/useUserProfile";
 
 const ChatMainPage = () => {
   const [selectedItem, setSelectedItem] = useState();
   const searchInputRef = useRef(null);
+  const { data: userProfile } = useUserProfile();
+  const [chatList, setChatList] = useState([]);
+  const [searchCriteria, setSearchCriteria] = useState("");
+
+  const onSearchInputChanged = (val) => {
+    setSearchCriteria(val);
+    if (pipe(isEmpty, not)(val)) {
+      setChatList(prop("contacts")(userProfile));
+    } else {
+      setChatList([]);
+    }
+  };
 
   return (
     <div className={styles["chat"]}>
       <div className={styles["chat__content"]}>
         <div className={styles["chat__history"]}>
           <ChatHistoryNavbar />
-          <ChatHistorySearch ref={searchInputRef} />
+          <ChatHistorySearch
+            ref={searchInputRef}
+            onChange={onSearchInputChanged}
+          />
           <ChatHistoryList
             setSelectedItem={setSelectedItem}
-            data={mockHistoryConversations}
-            searchCriteria={mockSearch}
+            data={chatList}
+            searchCriteria={searchCriteria}
           />
         </div>
-        <div>{selectedItem ? <Chat /> : <NoChatSelectedPlaceholder />}</div>
+        <div>
+          {selectedItem ? (
+            <Chat data={selectedItem} />
+          ) : (
+            <NoChatSelectedPlaceholder />
+          )}
+        </div>
       </div>
     </div>
   );

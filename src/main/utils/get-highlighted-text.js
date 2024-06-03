@@ -15,6 +15,7 @@ const joinByJsx = (jsx) => (arr) => {
   return newArr;
 };
 
+// TODO: highlight case insensitive
 const getHighlightedText = (str, searchCriteria, className) => {
   const matchedJsx = <span className={className}>{searchCriteria}</span>;
 
