@@ -12,7 +12,10 @@ import { updateMessages } from "../../utils/update-array-element";
 const Chat = ({ data, userProfile, socket }) => {
   const [messages, setMessages] = useState([]);
 
-  const { data: messagesHistory } = useMessages();
+  const { data: messagesHistory } = useMessages({
+    from: prop("id")(data),
+    to: prop("id")(userProfile),
+  });
 
   useEffect(() => {
     if (isNotEmptyOrNil(messagesHistory)) {
