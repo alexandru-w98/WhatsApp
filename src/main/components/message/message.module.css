@@ -1,11 +1,15 @@
 .container {
   display: flex;
+  min-height: 32.4px;
+  min-width: 22px;
 
   .message {
     background-color: rgb(32, 44, 51);
     width: fit-content;
     padding: 6px 7px 8px 9px;
     color: rgb(233, 237, 239);
+    display: flex;
+    column-gap: 8px;
   }
 
   .message--corner {
@@ -16,6 +20,19 @@
     color: rgb(32, 44, 51);
     order: -1;
     transform: rotateY(180deg);
+  }
+
+  .timestamp {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 11px;
+    align-self: flex-end;
+    display: flex;
+    column-gap: 3px;
+    margin-bottom: -2px;
+  }
+
+  .message__status {
+    margin-bottom: -2px;
   }
 }
 

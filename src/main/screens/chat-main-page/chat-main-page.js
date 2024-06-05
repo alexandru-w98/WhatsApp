@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import * as styles from "./chat-main-page.css";
 import ChatHistoryNavbar from "../../components/chat-history-navbar";
 import ChatHistorySearch from "../../components/chat-history-search";
@@ -8,8 +8,9 @@ import Chat from "../../components/chat";
 import withProtectedRoute from "../../hocs/withProtectedRoute";
 import { pipe, isEmpty, not, prop } from "ramda";
 import useUserProfile from "../../hooks/requests/useUserProfile";
+import withSocket from "../../hocs/withSocket";
 
-const ChatMainPage = () => {
+const ChatMainPage = ({ socket }) => {
   const [selectedItem, setSelectedItem] = useState();
   const searchInputRef = useRef(null);
   const { data: userProfile } = useUserProfile();
@@ -24,6 +25,12 @@ const ChatMainPage = () => {
       setChatList([]);
     }
   };
+
+  useEffect(() => {
+    socket.on("message-received", (message) => {
+      socket.emit("message-delivered", message);
+    });
+  }, [socket]);
 
   return (
     <div className={styles["chat"]}>
@@ -42,7 +49,7 @@ const ChatMainPage = () => {
         </div>
         <div>
           {selectedItem ? (
-            <Chat data={selectedItem} />
+            <Chat userProfile={userProfile} data={selectedItem} />
           ) : (
             <NoChatSelectedPlaceholder />
           )}
@@ -52,4 +59,4 @@ const ChatMainPage = () => {
   );
 };
 
-export default withProtectedRoute(ChatMainPage);
+export default pipe(withProtectedRoute, withSocket)(ChatMainPage);
