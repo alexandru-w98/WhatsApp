@@ -9,6 +9,7 @@ import withProtectedRoute from "../../hocs/withProtectedRoute";
 import { pipe, isEmpty, not, prop } from "ramda";
 import useUserProfile from "../../hooks/requests/useUserProfile";
 import withSocket from "../../hocs/withSocket";
+import isNotEmptyOrNil from "../../utils/is-not-empty-or-nil";
 
 const ChatMainPage = ({ socket }) => {
   const [selectedItem, setSelectedItem] = useState();
@@ -31,6 +32,14 @@ const ChatMainPage = ({ socket }) => {
       socket.emit("message-delivered", message);
     });
   }, [socket]);
+
+  useEffect(() => {
+    if (isNotEmptyOrNil(userProfile)) {
+      socket.emit("message-delivered-all", {
+        to: prop("id")(userProfile),
+      });
+    }
+  }, [userProfile]);
 
   return (
     <div className={styles["chat"]}>

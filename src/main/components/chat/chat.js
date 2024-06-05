@@ -1,5 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { prop, map, pipe, equals, prepend } from "ramda";
+import {
+  prop,
+  map,
+  pipe,
+  equals,
+  prepend,
+  not,
+  when,
+  assoc,
+  includes,
+} from "ramda";
 import ChatNavbar from "../chat-navbar";
 import ChatFooter from "../chat-footer";
 import * as styles from "./chat.css";
@@ -7,7 +17,17 @@ import withSocket from "../../hocs/withSocket";
 import useMessages from "../../hooks/requests/useMessages";
 import Message from "../message";
 import isNotEmptyOrNil from "../../utils/is-not-empty-or-nil";
-import { updateMessages } from "../../utils/update-array-element";
+
+export const updateMessages = (messages, ids) =>
+  map(
+    when(
+      (item) =>
+        includes(prop("id")(item), ids) &&
+        pipe(prop("status"), equals("READ"), not)(item),
+      assoc("status", "DELIVERED")
+    ),
+    messages
+  );
 
 const Chat = ({ data, userProfile, socket }) => {
   const [messages, setMessages] = useState([]);
@@ -36,10 +56,8 @@ const Chat = ({ data, userProfile, socket }) => {
       });
     });
 
-    socket.on("message-delivered", (message) => {
-      setMessages((prev) =>
-        updateMessages(prop("id")(message), "status", "DELIVERED", prev)
-      );
+    socket.on("message-delivered", (messagesIds) => {
+      setMessages((prev) => updateMessages(prev, messagesIds));
     });
 
     socket.on("message-read", () => {
