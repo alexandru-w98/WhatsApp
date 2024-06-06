@@ -3,13 +3,16 @@ import ChatOptionsMenu from "../chat-options-menu/chat-options-menu";
 import * as styles from "./chat-navbar.css";
 import { BurgerMenu, Search, DefaultProfile } from "../icons";
 
-const ChatNavbar = ({ name }) => {
+const ChatNavbar = ({ name, typing }) => {
   const leftItems = (
     <div className={styles["left-items"]}>
       <div className={styles["avatar"]}>
         <DefaultProfile width={40} height={40} />
       </div>
-      <div>{name}</div>
+      <div className={styles["name-container"]}>
+        <div>{name}</div>
+        {typing && <div className={styles["typing"]}>Typing...</div>}
+      </div>
     </div>
   );
   const rightItems = (

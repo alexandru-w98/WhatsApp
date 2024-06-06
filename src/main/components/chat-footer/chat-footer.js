@@ -20,6 +20,13 @@ const ChatFooter = ({ socket, currentUserId, toId }) => {
     }
   };
 
+  const onInputChanged = () => {
+    socket.emit("message-typing", {
+      from: currentUserId,
+      to: toId,
+    });
+  };
+
   return (
     <div className={styles["footer"]}>
       <Plus />
@@ -28,6 +35,7 @@ const ChatFooter = ({ socket, currentUserId, toId }) => {
         <input
           placeholder="Type a message"
           onKeyDown={onSubmitClicked}
+          onChange={onInputChanged}
           ref={inputRef}
         />
       </div>

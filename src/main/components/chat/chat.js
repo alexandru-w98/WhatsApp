@@ -9,6 +9,7 @@ import {
   when,
   assoc,
   includes,
+  pluck,
 } from "ramda";
 import ChatNavbar from "../chat-navbar";
 import ChatFooter from "../chat-footer";
@@ -29,12 +30,12 @@ export const updateMessages = (messages, ids) =>
     messages
   );
 
-const Chat = ({ data, userProfile, socket }) => {
+const Chat = ({ data, userProfile, socket, typingIds }) => {
   const [messages, setMessages] = useState([]);
 
   const { data: messagesHistory } = useMessages({
-    from: prop("id")(data),
-    to: prop("id")(userProfile),
+    from: prop("id")(userProfile),
+    to: prop("id")(data),
   });
 
   useEffect(() => {
@@ -80,12 +81,16 @@ const Chat = ({ data, userProfile, socket }) => {
         pipe(prop("from"), equals(prop("id")(data)))(msg) ? "left" : "right"
       }
       status={prop("status")(msg)}
+      key={prop("id")(msg)}
     />
   ))(messages);
 
   return (
     <div className={styles["chat"]}>
-      <ChatNavbar name={prop("name")(data)} />
+      <ChatNavbar
+        name={prop("name")(data)}
+        typing={includes(prop("id")(data), pluck("id")(typingIds))}
+      />
       <div className={styles["chat__content"]}>{messagesJSX}</div>
       <ChatFooter
         currentUserId={prop("id")(userProfile)}
