@@ -18,3 +18,5 @@ export { default as SmileyFace } from "./smiley-face";
 export { default as CaretDown } from "./caret-down";
 export { default as X } from "./x";
 export { default as ContainerCorner } from "./container-corner";
+export { default as Check } from "./check";
+export { default as DoubleCheck } from "./double-check";

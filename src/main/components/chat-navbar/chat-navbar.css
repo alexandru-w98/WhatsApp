@@ -27,3 +27,14 @@
     cursor: pointer;
   }
 }
+
+.name-container {
+  display: flex;
+  flex-direction: column;
+  row-gap: 4px;
+
+  .typing {
+    color: rgb(134, 150, 160);
+    font-size: 13px;
+  }
+}

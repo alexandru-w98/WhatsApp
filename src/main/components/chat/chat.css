@@ -8,7 +8,20 @@
     flex-grow: 1;
     display: flex;
     flex-direction: column-reverse;
-    padding: 0 60px 8px 60px;
+    padding: 8px 60px 8px 60px;
     gap: 4px;
+    height: 300px;
+    overflow-y: scroll;
+  }
+
+  .chat__content::-webkit-scrollbar {
+    width: 10px;
+  }
+
+  .chat__content::-webkit-scrollbar-thumb {
+    background-color: rgb(17, 27, 33);
+    border-radius: 20px;
+    box-shadow: inset 0 0 10px 10px rgb(44, 51, 55);
+    border: solid 2px transparent;
   }
 }

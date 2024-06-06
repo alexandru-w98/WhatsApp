@@ -3,7 +3,7 @@ import { Microphone, Plus, SmileyFace } from "../icons";
 import * as styles from "./chat-footer.css";
 import withSocket from "../../hocs/withSocket";
 
-const ChatFooter = ({ socket }) => {
+const ChatFooter = ({ socket, currentUserId, toId }) => {
   const inputRef = useRef(null);
 
   const onSubmitClicked = (e) => {
@@ -11,12 +11,20 @@ const ChatFooter = ({ socket }) => {
       const message = inputRef.current.value;
 
       socket.emit("message", {
-        text: message,
-        socketID: socket.id,
+        content: message,
+        from: currentUserId,
+        to: toId,
       });
 
       inputRef.current.value = "";
     }
+  };
+
+  const onInputChanged = () => {
+    socket.emit("message-typing", {
+      from: currentUserId,
+      to: toId,
+    });
   };
 
   return (
@@ -27,6 +35,7 @@ const ChatFooter = ({ socket }) => {
         <input
           placeholder="Type a message"
           onKeyDown={onSubmitClicked}
+          onChange={onInputChanged}
           ref={inputRef}
         />
       </div>
