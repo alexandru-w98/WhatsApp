@@ -20,3 +20,5 @@ export { default as X } from "./x";
 export { default as ContainerCorner } from "./container-corner";
 export { default as Check } from "./check";
 export { default as DoubleCheck } from "./double-check";
+export { default as Phone } from "./phone";
+export { default as VideoCamera } from "./video-camera";

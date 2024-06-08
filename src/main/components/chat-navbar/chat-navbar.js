@@ -1,7 +1,13 @@
 import React from "react";
 import ChatOptionsMenu from "../chat-options-menu/chat-options-menu";
 import * as styles from "./chat-navbar.css";
-import { BurgerMenu, Search, DefaultProfile } from "../icons";
+import {
+  BurgerMenu,
+  Search,
+  DefaultProfile,
+  Phone,
+  VideoCamera,
+} from "../icons";
 
 const ChatNavbar = ({ name, typing }) => {
   const leftItems = (
@@ -18,6 +24,8 @@ const ChatNavbar = ({ name, typing }) => {
   const rightItems = (
     <div className={styles["right-items"]}>
       <Search width={32} height={32} />
+      <VideoCamera />
+      <Phone />
       <BurgerMenu />
     </div>
   );
