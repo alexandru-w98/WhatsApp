@@ -90,6 +90,9 @@ const Chat = ({ data, userProfile, socket, typingIds }) => {
       <ChatNavbar
         name={prop("name")(data)}
         typing={includes(prop("id")(data), pluck("id")(typingIds))}
+        to={prop("id")(data)}
+        data={data}
+        from={prop("id")(userProfile)}
       />
       <div className={styles["chat__content"]}>{messagesJSX}</div>
       <ChatFooter

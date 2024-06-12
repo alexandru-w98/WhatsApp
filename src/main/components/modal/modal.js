@@ -3,10 +3,30 @@ import { createPortal } from "react-dom";
 import * as styles from "./modal.module.css";
 import classNames from "classnames";
 import noop from "../noop";
+import { cond, equals, always, T } from "ramda";
 
-const Modal = ({ children, className, onClose = noop, ...rest }) => {
-  const modalClasses = classNames(styles["modal-container"], className);
+const alignmentToClassMapping = cond([
+  [equals("top-right"), always(styles["align--top-right"])],
+  [T, always(styles["align--center"])],
+]);
+
+const Modal = ({
+  children,
+  className,
+  onBlur = noop,
+  align = "center",
+  ...rest
+}) => {
   const modalContentRef = useRef();
+  const containerClasses = classNames({
+    [styles["modal-container"]]: true,
+    [className]: className,
+  });
+
+  const modalClasses = classNames(
+    styles["modal"],
+    alignmentToClassMapping(align)
+  );
 
   useEffect(() => {
     const onClickOutside = (event) => {
@@ -14,7 +34,7 @@ const Modal = ({ children, className, onClose = noop, ...rest }) => {
         modalContentRef.current &&
         !modalContentRef.current.contains(event.target)
       ) {
-        onClose();
+        onBlur();
       }
     };
     document.addEventListener("mousedown", onClickOutside);
@@ -24,8 +44,8 @@ const Modal = ({ children, className, onClose = noop, ...rest }) => {
   }, [modalContentRef]);
 
   return createPortal(
-    <div className={modalClasses} {...rest}>
-      <div className={styles["modal"]} ref={modalContentRef}>
+    <div className={containerClasses} {...rest}>
+      <div className={modalClasses} ref={modalContentRef}>
         {children}
       </div>
     </div>,

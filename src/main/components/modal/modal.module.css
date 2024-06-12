@@ -7,8 +7,16 @@
 
   .modal {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
   }
+}
+
+.align--center {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.align--top-right {
+  top: 10px;
+  right: 10px;
 }

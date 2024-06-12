@@ -22,6 +22,8 @@ import {
 import useUserProfile from "../../hooks/requests/useUserProfile";
 import withSocket from "../../hocs/withSocket";
 import isNotEmptyOrNil from "../../utils/is-not-empty-or-nil";
+import CallingModal from "../../components/calling-modal";
+import SimplePeer from "simple-peer";
 
 const ChatMainPage = ({ socket }) => {
   const [selectedItem, setSelectedItem] = useState();
@@ -30,6 +32,9 @@ const ChatMainPage = ({ socket }) => {
   const [chatList, setChatList] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState("");
   const [typingIds, setTypingIds] = useState([]);
+
+  const [receivedMediaStream, setReceivedMediaStream] = useState();
+  const [senderId, setSenderId] = useState();
 
   const onSearchInputChanged = (val) => {
     setSearchCriteria(val);
@@ -67,6 +72,11 @@ const ChatMainPage = ({ socket }) => {
         }
       });
     });
+
+    socket.on("videocall", ({ from, streamData }) => {
+      setSenderId(from);
+      setReceivedMediaStream(streamData);
+    });
   }, [socket]);
 
   useEffect(() => {
@@ -76,6 +86,27 @@ const ChatMainPage = ({ socket }) => {
       });
     }
   }, [userProfile]);
+
+  const onAnswerCall = ({ currentStream, to, receiverVideoRef }) => {
+    const peer = new SimplePeer({
+      initiator: false,
+      trickle: false,
+      stream: currentStream,
+    });
+
+    peer.on("signal", (data) => {
+      socket.emit("videocall-accepted", {
+        streamData: data,
+        to,
+      });
+    });
+
+    peer.on("stream", (stream) => {
+      receiverVideoRef.current.srcObject = stream;
+    });
+
+    peer.signal(receivedMediaStream);
+  };
 
   return (
     <div className={styles["chat"]}>
@@ -103,6 +134,14 @@ const ChatMainPage = ({ socket }) => {
             <NoChatSelectedPlaceholder />
           )}
         </div>
+        {receivedMediaStream && (
+          <CallingModal
+            type="video"
+            status="receiving"
+            onAnswer={onAnswerCall}
+            to={senderId}
+          />
+        )}
       </div>
     </div>
   );

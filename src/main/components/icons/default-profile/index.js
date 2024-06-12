@@ -1,6 +1,6 @@
 import React from "react";
 
-const DefaultProfile = ({ width = "212", height = "212" }) => {
+const DefaultProfile = ({ width = "212", height = "212", className }) => {
   return (
     <svg
       viewBox="0 0 212 212"
@@ -10,6 +10,7 @@ const DefaultProfile = ({ width = "212", height = "212" }) => {
       x="0px"
       y="0px"
       enableBackground="new 0 0 212 212"
+      className={className}
     >
       <title>default-user</title>
       <path
